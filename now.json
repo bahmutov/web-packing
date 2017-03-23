@@ -1,0 +1,7 @@
+{
+  "name": "web-packing",
+  "alias": "web-packing",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
