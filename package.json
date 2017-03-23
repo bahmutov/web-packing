@@ -22,6 +22,7 @@
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "chdir-promise": "0.4.0",
     "check-more-types": "2.24.0",
     "common-tags": "1.4.0",
     "execa": "0.6.0",
@@ -41,7 +42,9 @@
   "config": {
     "pre-git": {
       "commit-msg": "simple",
-      "pre-commit": ["npm test"],
+      "pre-commit": [
+        "npm test"
+      ],
       "pre-push": [],
       "post-commit": [],
       "post-checkout": [],

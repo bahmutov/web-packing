@@ -7,27 +7,18 @@ const {bundle} = require('./web-packing')
 const pEachSeries = require('p-each-series')
 const execa = require('execa')
 const {tap} = require('ramda')
+const os = require('os')
+const chdir = require('chdir-promise')
 
 function timing (shortName, longName, seconds) {
   return `${shortName}=${seconds}; ${quote(longName)}`
 }
 
-function prune () {
-  console.log('pruning installed packages')
-  return execa.shell('npm prune')
-}
-
-// should respond with the bundle and timings
 function installAndBundle (...allNames) {
   const names = allNames.filter(is.unemptyString)
   la(is.array(names), 'expected list of names', names)
   la(is.not.empty(names), 'expected at least 1 name', names)
   console.log('packing names', names)
-
-  // const timings = [
-  //   timing('install', 'NPM install', 2),
-  //   timing('bundle', 'Webpack bundling', 1)
-  // ]
 
   const toSeconds = (startMs, endMs) => (endMs - startMs) / 1000
   const getTimings = times => {
@@ -55,8 +46,8 @@ function installAndBundle (...allNames) {
       .catch(reportError)
   }
 
-  const pruneAndReject = err => {
-    prune()
+  const backAndReject = err => {
+    chdir.back()
     return Promise.reject(err)
   }
 
@@ -64,7 +55,8 @@ function installAndBundle (...allNames) {
   const timestamp = () => times.push(+(new Date()))
   timestamp()
 
-  return pEachSeries(names, installName)
+  return chdir.to(os.tmpdir())
+    .then(() => pEachSeries(names, installName))
     .then(timestamp)
     .then(() => bundle(...names))
     .then(bundle => {
@@ -72,7 +64,7 @@ function installAndBundle (...allNames) {
       const timings = getTimings(times)
       return {bundle, timings}
     })
-    .then(tap(prune), pruneAndReject)
+    .then(tap(chdir.back), backAndReject)
 }
 
 module.exports = {installAndBundle}
