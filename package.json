@@ -1,0 +1,35 @@
+{
+  "name": "web-packing",
+  "version": "1.0.0",
+  "description": "Webpack on demand (immutable builds, cached by your browser)",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run lint",
+    "start": "micro",
+    "lint": "standard --verbose --fix *.js",
+    "build": "webpack --config webpack.config.js",
+    "pack": "node packer.js && cat dummy.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bahmutov/web-packing.git"
+  },
+  "keywords": ["webpack", "service"],
+  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "common-tags": "1.4.0",
+    "execa": "0.6.0",
+    "lodash": "4.17.4",
+    "memory-fs": "0.4.1",
+    "micro": "6.1.0",
+    "npm-utils": "1.11.0",
+    "p-each-series": "1.0.0",
+    "quote": "0.4.0",
+    "ramda": "0.23.0",
+    "webpack": "2.1.0-beta.25"
+  },
+  "devDependencies": {
+    "standard": "9.0.2"
+  }
+}
