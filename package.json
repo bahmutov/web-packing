@@ -14,12 +14,17 @@
     "type": "git",
     "url": "https://github.com/bahmutov/web-packing.git"
   },
-  "keywords": ["webpack", "service"],
+  "keywords": [
+    "webpack",
+    "service"
+  ],
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "check-more-types": "2.24.0",
     "common-tags": "1.4.0",
     "execa": "0.6.0",
+    "lazy-ass": "1.6.0",
     "lodash": "4.17.4",
     "memory-fs": "0.4.1",
     "micro": "6.1.0",

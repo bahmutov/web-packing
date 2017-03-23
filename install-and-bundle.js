@@ -1,3 +1,7 @@
+'use strict'
+
+const la = require('lazy-ass')
+const is = require('check-more-types')
 const quote = require('quote')
 const {bundle} = require('./web-packing')
 const pEachSeries = require('p-each-series')
@@ -14,7 +18,10 @@ function prune () {
 }
 
 // should respond with the bundle and timings
-function installAndBundle (...names) {
+function installAndBundle (...allNames) {
+  const names = allNames.filter(is.unemptyString)
+  la(is.array(names), 'expected list of names', names)
+  la(is.not.empty(names), 'expected at least 1 name', names)
   console.log('packing names', names)
 
   const timings = [
