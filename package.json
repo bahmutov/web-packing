@@ -8,7 +8,8 @@
     "start": "micro",
     "lint": "standard --verbose --fix *.js",
     "demo-build": "webpack --config webpack.config.js",
-    "pack": "node packer.js && cat dummy.js"
+    "pack": "node packer.js && cat dummy.js",
+    "commit": "commit-wizard"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,17 @@
     "webpack": "2.1.0-beta.25"
   },
   "devDependencies": {
+    "pre-git": "3.14.0",
     "standard": "9.0.2"
+  },
+  "config": {
+    "pre-git": {
+      "commit-msg": "simple",
+      "pre-commit": ["npm test"],
+      "pre-push": [],
+      "post-commit": [],
+      "post-checkout": [],
+      "post-merge": []
+    }
   }
 }
