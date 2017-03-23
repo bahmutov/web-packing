@@ -24,10 +24,23 @@ function installAndBundle (...allNames) {
   la(is.not.empty(names), 'expected at least 1 name', names)
   console.log('packing names', names)
 
-  const timings = [
-    timing('install', 'NPM install', 2),
-    timing('bundle', 'Webpack bundling', 1)
-  ]
+  // const timings = [
+  //   timing('install', 'NPM install', 2),
+  //   timing('bundle', 'Webpack bundling', 1)
+  // ]
+
+  const toSeconds = (startMs, endMs) => (endMs - startMs) / 1000
+  const getTimings = times => {
+    console.log('times', times)
+    const timings = []
+    timings.push(timing('install', 'NPM install',
+      toSeconds(times[0], times[1])))
+    timings.push(timing('bundle', 'Webpack bundling',
+      toSeconds(times[1], times[2])))
+    console.log('timings')
+    console.log(timings)
+    return timings
+  }
 
   const installName = name => {
     console.log('installing', name)
@@ -47,9 +60,16 @@ function installAndBundle (...allNames) {
     return Promise.reject(err)
   }
 
+  const times = []
+  const timestamp = () => times.push(+(new Date()))
+  timestamp()
+
   return pEachSeries(names, installName)
+    .then(timestamp)
     .then(() => bundle(...names))
     .then(bundle => {
+      timestamp()
+      const timings = getTimings(times)
       return {bundle, timings}
     })
     .then(tap(prune), pruneAndReject)
