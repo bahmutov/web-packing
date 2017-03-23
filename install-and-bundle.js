@@ -1,6 +1,5 @@
-const npm = require('npm-utils')
 const quote = require('quote')
-const {bundle} = require('./packer')
+const {bundle} = require('./web-packing')
 const pEachSeries = require('p-each-series')
 const execa = require('execa')
 const {tap} = require('ramda')
@@ -25,11 +24,14 @@ function installAndBundle (...names) {
 
   const installName = name => {
     console.log('installing', name)
+    const cmd = `npm --cache-min 9999999 install ${name}`
+
     const reportError = err => {
-      console.log('Could not install', name)
+      console.error('Could not install', name)
+      console.error('cmd:', cmd)
       return Promise.reject(err)
     }
-    return npm.install({name})
+    return execa.shell(cmd)
       .catch(reportError)
   }
 

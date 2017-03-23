@@ -23,7 +23,6 @@
     "lodash": "4.17.4",
     "memory-fs": "0.4.1",
     "micro": "6.1.0",
-    "npm-utils": "1.11.0",
     "p-each-series": "1.0.0",
     "quote": "0.4.0",
     "ramda": "0.23.0",
