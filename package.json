@@ -7,7 +7,7 @@
     "test": "npm run lint",
     "start": "micro",
     "lint": "standard --verbose --fix *.js",
-    "build": "webpack --config webpack.config.js",
+    "demo-build": "webpack --config webpack.config.js",
     "pack": "node packer.js && cat dummy.js"
   },
   "repository": {
