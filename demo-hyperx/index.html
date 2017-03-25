@@ -1,0 +1,17 @@
+<body>
+  <script src="https://rawgit.com/bahmutov/console-log-div/master/console-log-div.js"></script>
+  <script src="http://localhost:3000/hyperx"></script>
+  <p>
+    <h3>Hyperx Example</h3>
+    Source: <a href="https://github.com/substack/hyperx#consolelog-example">Console.log example</a>
+  </p>
+  <script>
+  console.log('found object "window.packs"')
+  console.log('using window.packs object with', Object.keys(window.packs))
+  var hyperx = window.packs.hyperx
+  var write = hyperx(function (tagName, attrs, children) {
+    console.log(tagName, attrs, children)
+  })
+  write`<h1>hello world</h1>`
+  </script>
+</body>
