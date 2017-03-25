@@ -1,9 +1,13 @@
+'use strict'
+
+const la = require('lazy-ass')
+const is = require('check-more-types')
 const webpack = require('webpack')
 const webpackConfig = require('./webpack.config')
-// const MemoryFS = require('memory-fs')
 const fs = require('fs')
 const {stripIndent} = require('common-tags')
 const _ = require('lodash')
+const path = require('path')
 
 // TODO remove scope, use camel case
 const safeName = packageName => {
@@ -26,12 +30,21 @@ function writeEntry (...names) {
   fs.writeFileSync(webpackConfig.entry, str + '\n\n', 'utf8')
 }
 
-function bundle (...names) {
+function bundle (outputFilename, ...names) {
   console.log('bundling', names)
+  console.log('into', outputFilename)
+  la(is.unemptyString(outputFilename),
+    'missing output filename', outputFilename)
+
+  const outputPath = path.dirname(outputFilename)
+  const outputFile = path.basename(outputFilename)
+
   return new Promise((resolve, reject) => {
     writeEntry(...names)
+    webpackConfig.output.path = outputPath
+    webpackConfig.output.filename = outputFile
+
     const compiler = webpack(webpackConfig)
-    // compiler.outputFileSystem = fs
     compiler.run((err, stats) => {
       if (err || stats.hasErrors()) {
         if (err) {
@@ -42,9 +55,6 @@ function bundle (...names) {
       }
       // https://webpack.js.org/api/node/
       const content = fs.readFileSync(webpackConfig.output.filename, 'utf8')
-      // console.log('content', content)
-
-      // const dummyJavaScript = 'console.log("packed")'
       resolve(content)
     })
   })
@@ -53,7 +63,7 @@ function bundle (...names) {
 module.exports = {bundle}
 
 if (!module.parent) {
-  bundle('@cycle/run')
+  bundle('/tmp/bundle.js', '@cycle/run')
     .then(() => console.log('bundled'))
     .catch(console.error)
 }
