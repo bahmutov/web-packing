@@ -33,6 +33,7 @@
     "p-each-series": "1.0.0",
     "quote": "0.4.0",
     "ramda": "0.23.0",
+    "validate-npm-package-name": "3.0.0",
     "webpack": "2.1.0-beta.25"
   },
   "devDependencies": {
