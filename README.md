@@ -13,7 +13,7 @@ Let us say you want to try [hyperx](https://github.com/substack/hyperx).
 Just grab it and it will be available as `window.packs.hyper`
 
 ```html
-<script src="https://your domain/hyperx"></script>
+<script src="https://your web-packing domain/hyperx"></script>
 <script>
   // print virtual dom from template string
   var hyperx = window.packs.hyperx
@@ -21,6 +21,15 @@ Just grab it and it will be available as `window.packs.hyper`
     console.log(tagName, attrs, children)
   })
   write`<h1>hello world</h1>`
+</script>
+```
+
+Multiple libs can be packed
+
+```html
+<script src="https://your web-packing domain/hyperx&lodash"></script>
+<script>
+  var {hyperx, lodash} = window.packs
 </script>
 ```
 
@@ -36,9 +45,7 @@ Cache-Control:max-age=99999999, public, immutable
 
 You can see the server timings BTW in the modern browser
 
-```
 ![Server Timing](images/web-packing.png)
-```
 
 ## Small print
 
