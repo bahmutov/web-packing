@@ -33,7 +33,7 @@ Multiple libs can be packed
 </script>
 ```
 
-## It is slow?!
+## It is super slow, right?!
 
 Running NPM install + webpack every time someone requires a library
 **is slow**. To get around it, every bundle is cached by the service and
