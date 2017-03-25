@@ -45,7 +45,9 @@ Cache-Control:max-age=99999999, public, immutable
 
 You can see the server timings BTW in the modern browser
 
-![Server Timing](images/web-packing.png)
+![Server Timing][screenshot]
+
+[screenshot]: https://raw.githubusercontent.com/bahmutov/web-packing/master/images/web-packing.png
 
 ## Small print
 
