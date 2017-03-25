@@ -1,0 +1,35 @@
+<body>
+  <script src="https://rawgit.com/bahmutov/console-log-div/master/console-log-div.js"></script>
+  <!-- run Cycle.js without NPM or packing -->
+  <script src="https://unpkg.com/xstream@10.3.0/dist/xstream.js"></script>
+  <script src="https://unpkg.com/@cycle/run@3.1.0/dist/cycle-run.js"></script>
+  <script src="https://unpkg.com/@cycle/dom@16.0.0/dist/cycle-dom.js"></script>
+  <p>
+    <h3>Cycle.js Example</h3>
+    Source: <a href="https://cycle.js.org/">first Cycle.js example</a>
+  </p>
+  <div id="app-container"></div>
+  <script>
+  const {run} = Cycle
+  const {div, label, input, hr, h1, makeDOMDriver} = CycleDOM
+
+  function main(sources) {
+    const input$ = sources.DOM.select('.field').events('input')
+
+    const name$ = input$.map(ev => ev.target.value).startWith('')
+
+    const vdom$ = name$.map(name =>
+      div([
+        label('Name:'),
+        input('.field', {attrs: {type: 'text'}}),
+        hr(),
+        h1('Hello ' + name),
+      ])
+    )
+
+    return { DOM: vdom$ }
+  }
+
+  run(main, { DOM: makeDOMDriver('#app-container') })
+  </script>
+</body>

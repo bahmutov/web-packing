@@ -2,3 +2,4 @@ npm-debug.log
 node_modules/
 bundle.js
 dummy.js
+.DS_Store
