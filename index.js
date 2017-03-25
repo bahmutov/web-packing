@@ -4,6 +4,9 @@ const {send, createError} = require('micro')
 const {installAndBundle} = require('./install-and-bundle')
 const {tail} = require('ramda')
 const validate = require('validate-npm-package-name')
+const fs = require('fs')
+const is = require('check-more-types')
+const readme = fs.readFileSync('./README.md', 'utf8')
 
 function validateNames (...names) {
   names.forEach(name => {
@@ -15,8 +18,16 @@ function validateNames (...names) {
 }
 
 module.exports = async (req, res) => {
+  if (req.url === '/favicon.ico') {
+    return send(res, 404)
+  }
+
   try {
-    const names = tail(req.url).split('&')
+    const names = tail(req.url).split('&').filter(is.unemptyString)
+    if (is.empty(names)) {
+      return readme
+    }
+
     console.log('packing names', names)
     validateNames(...names)
 
