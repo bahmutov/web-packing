@@ -33,6 +33,8 @@ Multiple libs can be packed
 </script>
 ```
 
+See more examples in `examples` folder.
+
 ## It is super slow, right?!
 
 Running NPM install + webpack every time someone requires a library
