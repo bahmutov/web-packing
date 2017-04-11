@@ -7,6 +7,7 @@
 </head>
 <body>
   <script src="https://web-packing.com/@cycle/run&@cycle/dom&xstream"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/loglevel/1.4.1/loglevel.min.js"></script>
   <h3>Counter example</h3>
   <div id="app"></div>
   <script>
@@ -29,7 +30,7 @@
       sources.DOM.select('.dec').events('click').mapTo(-1),
       sources.DOM.select('.inc').events('click').mapTo(+1),
       devTools$
-    );
+    ).debug(log.debug);
 
     const count$ = action$.fold((x, y) => x + y, 0);
 
